@@ -1,19 +1,25 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import Video from './Video';
 import {videoStore} from '../data/video/VideoContext';
 
 export default function VideoList(){
-    const [videoState] = useContext(videoStore);
+    const [videoState, videoDispatch] = useContext(videoStore);
+    const videoList = useMemo(() => {
+        function onClick(video){
+            videoDispatch({
+                type: 'select',
+                value: video
+            })
+        }
 
-    function onClick(video){
-        console.log(video);
-    }
+        return videoState.videos.map(item => (
+            <Video key={item.url} onClick={onClick} video={item} />
+        ));
+    },[videoState.videos, videoDispatch])
 
     return(
         <ul className="list">
-            {videoState.videos.map(item => (
-                <Video key={item.id} onClick={onClick} video={item} />
-            ))}
+            {videoList}
         </ul>
     );
 }
