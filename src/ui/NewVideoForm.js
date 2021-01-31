@@ -1,43 +1,44 @@
-import React from 'react';
-import Video from './Video';
+import React, {useState} from 'react';
 
-const _list = [
-    {
-        id: 1,
-        title: 'Ocean',
-        duration: 18,
-        url: 'https://cdn.videvo.net/videvo_files/video/free/2020-05/small_watermarked/3d_ocean_1590675653_preview.webm',
-        cover: 'https://images.freeimages.com/images/large-previews/fbb/ocean-1185036.jpg'
-    },
-    {
-        id: 2,
-        title: 'Ocean',
-        duration: 18,
-        url: 'https://cdn.videvo.net/videvo_files/video/free/2020-05/small_watermarked/3d_ocean_1590675653_preview.webm',
-        cover: 'https://images.freeimages.com/images/large-previews/fbb/ocean-1185036.jpg'
-    },
-    {
-        id: 3,
-        title: 'Ocean',
-        duration: 18,
-        url: 'https://cdn.videvo.net/videvo_files/video/free/2020-05/small_watermarked/3d_ocean_1590675653_preview.webm',
-        cover: 'https://images.freeimages.com/images/large-previews/fbb/ocean-1185036.jpg'
-    },
+export default function NewVideoForm(){
+    const [title, setTitle] = useState('');
+    const [duration, setDuration] = useState('');
+    const [url, setUrl] = useState('');
+    const [cover, setCover] = useState('');
 
-]
-
-export default function VideoList(){
-
-    function onClick(video){
-        console.log(video);
+    function save(){
+        const newVideo = {
+            title,
+            duration,
+            url,
+            cover
+        };
+        //salvar
+        reset();
     }
 
-    return(
-        <ul className="list">
-            {_list.map(item => (
-                <Video key={item.id} onClick={onClick} video={item}/>
-            ))}
-            
-        </ul>
+    function reset(){
+        setTitle('');
+        setDuration('');
+        setUrl('');
+        setCover('');
+    }
+
+    return (
+        <div className="form">
+            <label>Título:</label> 
+            <input type="text" value={title} onChange={(event) => setTitle(event.target.value)}/>
+
+            <label>Duração:</label> 
+            <input type="text" value={duration} onChange={(event) => setDuration(event.target.value)}/>
+
+            <label>Vídeo:</label> 
+            <input type="text" value={url} onChange={(event) => setUrl(event.target.value)}/>
+
+            <label>Imagem:</label> 
+            <input type="text" value={cover} onChange={(event) => setCover(event.target.value)}/>
+
+            <button onClick={save}>Salvar</button>
+        </div>
     );
 }
